@@ -5,44 +5,44 @@
 #include "inet_address.h"
 #include <sys/socket.h>
 
-
-class SocketConnectException :public std::exception
+class SocketConnectException : public std::exception
 {
 public:
-    virtual char const* what() noexcept { return "socket connect error"; };
+    virtual char const *what() noexcept { return "socket connect error"; };
 };
 
-class Socket :nocopyable
+class Socket : nocopyable
 {
 
 public:
-    explicit Socket(int sockfd): __sockfd(sockfd) {};
-    
-    Socket(Socket&& that); // socket 移动拷贝构造
+    explicit Socket(int sockfd) : __sockfd(sockfd){};
 
-    Socket& operator=(Socket&& that); // Socket 移动赋值重载构造
+    Socket(Socket &&that); // socket 移动拷贝构造
+
+    Socket &operator=(Socket &&that); // Socket 移动赋值重载构造
 
     ~Socket();
 
-    inline const int& get_sockfd() const { return __sockfd; };
+    inline const int &get_sockfd() const { return __sockfd; };
 
-    void bind(const InetAddress& addr);
-    
+    void bind(const InetAddress &addr);
+
     void listen(int backlog);
 
-    int connect(const InetAddress& serverAddr) throw();
+    int connect(const InetAddress &serverAddr) throw();
 
     void setRefuse(bool refuse);
 
-    static Socket createTCP();    
+    static Socket createTCP();
 
     int shutdownWrite();
 
-    int read(void* buf, size_t len);
+    int read(void *buf, size_t len);
+
+    int write(const void *buf, size_t len);
 
 private:
     int __sockfd;
 };
-
 
 #endif /* TTCP_SOCKET_H */
