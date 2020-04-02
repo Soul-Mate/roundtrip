@@ -35,11 +35,17 @@ public:
 
     static Socket createTCP();
 
+    static Socket createUDP();
+
     int shutdownWrite();
 
     int read(void *buf, size_t len);
 
     int write(const void *buf, size_t len);
+
+    int readUDP(void *buf, size_t len, InetAddress &addr);
+
+    int writeUDP(const void *buf, size_t len, const InetAddress &addr);
 
 private:
     int __sockfd;

@@ -2,17 +2,26 @@ cmake_minimum_required(VERSION 3.5)
 
 project(ttcp LANGUAGES CXX)
 
+if(CMAKE_BUILD_TYPE STREQUAL Debug)
+    add_definitions(-DDEBUG)
+endif()
+
 set(APP_EXE netcat)
 
-set(TTCP_HEADERS common.h inet_address.h socket.h accept.h tcp_stream.h message.h command.h)
+set(TTCP_HEADERS common.h inet_address.h socket.h accept.h tcp_stream.h message.h)
 
-set(TTCP_SRCS socket.cc inet_address.cc accept.cc tcp_stream.cc command.cc)
+set(TTCP_SRCS socket.cc inet_address.cc accept.cc tcp_stream.cc)
 
 add_library(ttpclib STATIC  ${TTCP_SRCS} ${TTCP_HEADERS})
 
 add_executable(sender sender.cc)
 
+add_executable(${APP_EXE} netcat.cc)
+
+
 target_link_libraries(sender ttpclib pthread)
+
+target_link_libraries(${APP_EXE} ttpclib pthread)
 
 # add_executable(inet_address_test inet_address_test.cc)
 

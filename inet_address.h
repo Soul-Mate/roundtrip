@@ -45,6 +45,8 @@ public:
 
     inline sockaddr_in& getSockAddrNonConst() { return __sockaddr; };
 
+    inline sockaddr_in* getSockAddrPtrNonConst() { return &__sockaddr; }
+
     inline void setSockAddr(const sockaddr& addr) { std::memcpy(&__sockaddr, &addr, sizeof addr); };
 private:
     sockaddr_in __sockaddr;
