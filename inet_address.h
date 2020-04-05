@@ -44,6 +44,8 @@ public:
 
     explicit InetAddress(const sockaddr_in &addr);
 
+    explicit InetAddress(in_port_t port);
+
     std::string toIP() const;
 
     std::string toEndpoint() const;

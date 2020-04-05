@@ -5,14 +5,8 @@
 #include <cstring>
 #include <cassert>
 #include <string>
+#include <cstdio>
 
-template <typename T>
-void Log(T log)
-{
-#ifdef DEBUG
-    std::cerr << log << std::endl;
-#endif
-}
 
 class nocopyable
 {

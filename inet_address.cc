@@ -25,6 +25,13 @@ InetAddress::InetAddress(in_port_t port, bool loopback)
     __sockaddr.sin_addr.s_addr = htonl(loopback ? INADDR_LOOPBACK : INADDR_ANY);
 }
 
+InetAddress::InetAddress(in_port_t port)
+{
+    bzero(&__sockaddr, sizeof(sockaddr_in));
+    __sockaddr.sin_port = htons(port);
+    __sockaddr.sin_family = AF_INET;
+}
+
 InetAddress::InetAddress(const sockaddr_in &addr)
 {
     std::memcpy(&__sockaddr, &addr, sizeof(addr));

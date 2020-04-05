@@ -36,7 +36,6 @@ Socket Socket::createTCP()
 
 Socket Socket::createUDP()
 {
-    Log("Socket::createUDP");
     int sockfd = ::socket(AF_INET, SOCK_DGRAM, 0);
     assert(sockfd >= 0);
     return Socket(sockfd);
@@ -102,9 +101,10 @@ int Socket::write(const void *buf, size_t len)
 
 int Socket::readUDP(void *buf, size_t len, InetAddress &addr)
 {
-    socklen_t addrLen;
+    struct sockaddr_in *addrPtr = &addr.getSockAddrNonConst();
+    socklen_t addrLen = sizeof *addrPtr;
     return recvfrom(__sockfd, buf, len, 0,
-                    (struct sockaddr *)(&addr.getSockAddrNonConst()), &addrLen);
+                    (struct sockaddr *)addrPtr, &addrLen);
 }
 
 int Socket::writeUDP(const void *buf, size_t len, const InetAddress &addr)

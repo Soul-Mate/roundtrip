@@ -1,17 +1,17 @@
-#ifndef TTCP_MESSAGE_H
-#define TTCP_MESSAGE_H
+#ifndef ROUNDTRIP_MESSAGE_H
+#define ROUNDTRIP_MESSAGE_H
+#include <memory>
+#include "inet_address.h"
+#include "socket.h"
 
-struct SessionMessage
+struct RoundTripMessage
 {
-    int32_t number;
-    int32_t length;
-} __attribute__ ((__packed__));
+    uint64_t t1;
+    uint64_t t2;
+} __attribute__((__packed__));
 
-struct PayloadMessage
-{
-    uint32_t length;
-    char data[0];
-};
+void roundTripMessageRequest(std::shared_ptr<Socket> sock, std::shared_ptr<InetAddress> addr);
 
+uint64_t now();
 
-#endif /* TTCP_MESSAGE_H */
+#endif /* ROUNDTRIP_MESSAGE_H */
