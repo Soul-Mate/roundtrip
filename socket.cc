@@ -103,5 +103,12 @@ int Socket::write(const void *buf, size_t len)
 int Socket::readUDP(void *buf, size_t len, InetAddress &addr)
 {
     socklen_t addrLen;
-    recvfrom(__sockfd, buf, len, 0, (struct sockaddr *)(&addr.getSockAddrNonConst()), &addrLen)
+    return recvfrom(__sockfd, buf, len, 0,
+                    (struct sockaddr *)(&addr.getSockAddrNonConst()), &addrLen);
+}
+
+int Socket::writeUDP(const void *buf, size_t len, const InetAddress &addr)
+{
+    return sendto(__sockfd, buf, len, 0,
+                  (const struct sockaddr *)(&addr.getSockAddr()), sizeof addr.getSockAddr());
 }
